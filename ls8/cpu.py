@@ -7,7 +7,20 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-        pass
+        self.address = 0
+        self.ram = [0] * 256
+        self.registers = [0] * 98
+        self.LDI = 0b10000010 # 130
+        self.PRN = 0b01000111 # 71
+        self.HLT = 0b00000001 # 1
+
+
+    def ram_read(self, address = None):
+        return self.ram[address]
+    
+    def ram_write(self, value = None, address = None):
+        self.ram[address] = value
+        return self.ram[address]
 
     def load(self):
         """Load a program into memory."""
@@ -62,4 +75,39 @@ class CPU:
 
     def run(self):
         """Run the CPU."""
-        pass
+        running = True
+
+        while running:
+            ir = memory[pc]  # Instruction Register, copy of the currently-executing instruction
+
+            if IR == self.LDI:
+                self.reg[operand_a] = operand_b
+                self.pc += 3
+
+            elif IR == self.PRN:
+                print(self.reg[operand_a])
+                self.pc += 2
+
+            elif IR == self.HLT:
+                running = False
+        ​
+        #     if ir == 1:  # PRINT_BEEJ
+        #         print("Beej!")
+        #         pc += 1
+        # ​
+        #     elif ir == 2:
+        #         running = False
+        # ​
+        #     elif ir == 3:  # SAVE_REG
+        #         reg_num = memory[pc + 1]
+        #         value = memory[pc + 2]
+        #         registers[reg_num] = value
+        #         pc += 3
+        # ​
+        #     elif ir == 4:  # PRINT_REG
+        #         reg_num = memory[pc + 1]
+        #         print(registers[reg_num])
+        #         pc += 2
+        # ​
+        #     else:
+        #         print(f"Unknown instruction {b}")
